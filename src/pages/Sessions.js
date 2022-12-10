@@ -1,29 +1,46 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function Sessions() {
-    const { idFilme } = useParams()
-    const [movieSession, setMovieSession] = useState(undefined)
+    const [sessions, setSessions] = useState([])
+    const params = useParams()
+    console.log(sessions)
 
     useEffect(() => {
-        axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
-        .then((res) => setMovieSession(res.data.days))
-        .catch((err) => console.log(err.response.data))
+        axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${params.idFilme}/showtimes`)
+            .then((res) => setSessions(res.data))
+            .catch((err) => console.log(err.response.data))
     }, [])
 
     return (
         <>
-            <Title>Selecione os horários</Title>
-            {movieSession.map(session=> (
-            <Session key={session.weekday}>
-                {session.weekday} - {session.date}
-                </Session>))}
+            <Container>
+                <Title>Selecione o horário</Title>
+                {(sessions.days)?.map((s) => (
+                    <StyleSession>
+                        <p>{s.weekday} - {s.date}</p>
+                        {(s.showtimes)?.map((hour) => (
+                            <Link to={`/assentos/${hour.id}`}>
+                                <button>{hour.name}</button>
+                            </Link>
+                        ))}
+                    </StyleSession>
+                ))}
+            </Container>
+            <Footer>
+                <div>
+                    <img src={sessions.posterURL} />
+                </div>
+                <p>{sessions.title}</p>
+            </Footer>
         </>
     )
 }
-
+const Container = styled.div`
+    padding-bottom: 100px;
+`
 const Title = styled.div`
     width: 100%;
     height: 110px;
@@ -37,7 +54,7 @@ const Title = styled.div`
     line-height: 28px;
     color: #293845;
 `
-const Session = styled.div`
+const StyleSession = styled.div`
     height: 35px;
     margin-left: 24px;
     margin-bottom: 88px;
@@ -92,17 +109,3 @@ const Footer = styled.div`
         margin-left: 14px;
     }
 `
-
-/*{movieSession.days.map((movie) => (
-            <Session>
-                <p>{movie.weekday} - {movie.date}</p>
-                {movie.showtimes.map((showtime) =>(
-                    <button>{showtime.name}</button>
-                ))}
-                </Session>))}
-            <Footer>
-               <div>
-                <img src={movieSession.posterURL}/>
-                </div>
-                <p>{movieSession.title}</p>
-            </Footer> */

@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styled from "styled-components"
-import Accents from "./Accents"
-import Films from "./Films"
-import Sessions from "./Sessions"
-import Success from "./Success"
+import Accents from "../pages/Accents"
+import Films from "../pages/Films"
+import Sessions from "../pages/Sessions"
+import Success from "../pages/Success"
 
 export function Container() {
     return (

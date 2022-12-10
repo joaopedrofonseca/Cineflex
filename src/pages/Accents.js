@@ -1,26 +1,26 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function Accents() {
-    const [chair, setChair] = useState(undefined)
-    
+    const [chair, setChair] = useState([])
+    const params = useParams()
+    console.log(chair)
+
     useEffect(() => {
-        const promise = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/showtimes/17/seats")
-        promise.then((res) => setChair(res.data))
-        promise.catch((err) => console.log(err.response.data))
+        axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSessao}/seats`)
+            .then((res) => setChair(res.data))
+            .catch((err) => console.log(err.response.data))
     }, [])
 
     return (
         <>
             <Title>Selecione o(s) assento(s)</Title>
             <ContainerSeats>
-                {/*chair.map((chair) =>
-                (
-                    <Seats key={chair.id}>
-                        {chair.name}
-                    </Seats>
-                ))*/}
+                {(chair.seats)?.map((s) => (
+                    <Seats>{s.name}</Seats>
+                ))}
             </ContainerSeats>
             <ExampleSeats>
                 <div>
@@ -45,14 +45,13 @@ export default function Accents() {
             </Buyer>
             <Footer>
                 <div>
-                    <img src="https://br.web.img2.acsta.net/pictures/20/08/18/16/25/0872062.jpg" />
+                    <img src={chair.movie.posterURL} />
                 </div>
                 <footer>
-                    <p>Enola Holmes</p>
-                    <p>Quinta-feira - 15:00</p>
+                    <p>{chair.movie.title}</p>
+                    <p>{chair.day.weekday} - {chair.name}</p>
                 </footer>
             </Footer>
-
         </>
     )
 }
@@ -83,6 +82,7 @@ const Seats = styled.button`
     background: ${props => props.color};
     border: 1px solid ${props => props.borderColor};
     border-radius: 12px;
+    margin-right: 5px;
 `
 const ExampleSeats = styled.div`
     height: 53px;
