@@ -5,22 +5,32 @@ import styled from "styled-components"
 
 export default function Accents() {
     const [chair, setChair] = useState([])
+    const [movie, setMovie] = useState([])
+    const [date, setDate] = useState([])
     const params = useParams()
-    console.log(chair)
+    console.log(chair, movie, date)
 
     useEffect(() => {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSessao}/seats`)
-            .then((res) => setChair(res.data))
+            .then((res) => {
+                setChair(res.data)
+                setMovie(res.data.movie)
+                setDate(res.data.day)
+            }    
+            )
             .catch((err) => console.log(err.response.data))
     }, [])
 
+    if (chair === []) {
+        return (
+            console.log('aguardando...')
+        )
+    }
     return (
         <>
             <Title>Selecione o(s) assento(s)</Title>
             <ContainerSeats>
-                {(chair.seats)?.map((s) => (
-                    <Seats>{s.name}</Seats>
-                ))}
+                {(chair.seats)?.map((e) => <Seats>{e.name}</Seats>)}
             </ContainerSeats>
             <ExampleSeats>
                 <div>
@@ -45,13 +55,14 @@ export default function Accents() {
             </Buyer>
             <Footer>
                 <div>
-                    <img src={chair.movie.posterURL} />
+                    <img src={movie.posterURL}/>
                 </div>
                 <footer>
-                    <p>{chair.movie.title}</p>
-                    <p>{chair.day.weekday} - {chair.name}</p>
+                    <p>{movie.title}</p>
+                    <p>{date.weekday} - {chair.name}</p>
                 </footer>
             </Footer>
+
         </>
     )
 }
@@ -172,3 +183,19 @@ const Footer = styled.div`
         margin-left: 14px;
     }
 `
+
+/*                {(chair.seats).map((s) => (
+                    <Seats>{s.name}</Seats>
+                ))}
+            <Footer>
+                <div>
+                    <img src={image.posterURL} />
+                </div>
+                <footer>
+                    <p>{image.title}</p>
+                    <p>{chair.day.weekday} - {chair.name}</p>
+                </footer>
+            </Footer>
+
+
+*/

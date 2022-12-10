@@ -14,6 +14,12 @@ export default function Sessions() {
             .catch((err) => console.log(err.response.data))
     }, [])
 
+    if (sessions === []) {
+        return (
+            console.log('aguardando...')
+        )
+    }
+
     return (
         <>
             <Container>

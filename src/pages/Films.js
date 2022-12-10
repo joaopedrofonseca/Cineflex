@@ -12,7 +12,9 @@ export default function Films() {
     }, [])
 
     if (movies === undefined) {
-        return <img src="https://gifs.eco.br/wp-content/uploads/2021/08/imagens-e-gifs-de-loading-7.gif" alt="loading" />
+        return (
+            console.log('aguardando...')
+        )
     }
 
     return (
