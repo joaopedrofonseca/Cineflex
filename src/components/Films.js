@@ -1,30 +1,32 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Films(){
+export default function Films() {
     const [movies, setMovies] = useState(undefined)
-
-    useEffect(()=>{
+    useEffect(() => {
         const promise = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
         promise.then((res) => setMovies(res.data))
         promise.catch((err) => console.log(err.response.data))
-    },[])
+    }, [])
 
     if (movies === undefined) {
-        return <div>Carregando...</div>
-      }
+        return <img src="https://gifs.eco.br/wp-content/uploads/2021/08/imagens-e-gifs-de-loading-7.gif" alt="loading" />
+    }
 
-    return(
+    return (
         <>
-        <Title>Selecione o filme</Title>
-        <Catalog>
-            {movies.map((movie) =>(
-                <Film key={movie.title} id={movie.id}>
-                    <img src={movie.posterURL}/>
-                </Film>
-            ))}
-        </Catalog>
+            <Title>Selecione o filme</Title>
+            <Catalog>
+                {movies.map((movie) => (
+                    <Link key={movie.title} to={`/sessoes/${movie.id}`}>
+                        <Film id={movie.id}>
+                            <img src={movie.posterURL} />
+                        </Film>
+                    </Link>
+                ))}
+            </Catalog>
         </>
     )
 }

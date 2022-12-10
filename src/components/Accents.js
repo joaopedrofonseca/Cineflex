@@ -4,11 +4,13 @@ import styled from "styled-components"
 
 export default function Accents() {
     const [chair, setChair] = useState(undefined)
+    
     useEffect(() => {
         const promise = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/showtimes/17/seats")
         promise.then((res) => setChair(res.data))
         promise.catch((err) => console.log(err.response.data))
     }, [])
+
     return (
         <>
             <Title>Selecione o(s) assento(s)</Title>
@@ -54,6 +56,7 @@ export default function Accents() {
         </>
     )
 }
+
 const Title = styled.div`
     width: 100%;
     height: 110px;

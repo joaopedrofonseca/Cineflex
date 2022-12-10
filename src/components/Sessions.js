@@ -1,19 +1,25 @@
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
 export default function Sessions() {
+    const { idFilme } = useParams()
+    const [movieSession, setMovieSession] = useState(undefined)
+
+    useEffect(() => {
+        axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
+        .then((res) => setMovieSession(res.data.days))
+        .catch((err) => console.log(err.response.data))
+    }, [])
+
     return (
         <>
-            <Title>Selecione o horário</Title>
-            <Session>
-                <p>Quinta-feira - 24/06/2021</p>
-                <button>15:00</button>
-            </Session>
-            <Footer>
-                <div>
-                <img src="https://br.web.img2.acsta.net/pictures/20/08/18/16/25/0872062.jpg"/>
-                </div>
-                <p>Enola Holmes</p>
-            </Footer>
+            <Title>Selecione os horários</Title>
+            {movieSession.map(session=> (
+            <Session key={session.weekday}>
+                {session.weekday} - {session.date}
+                </Session>))}
         </>
     )
 }
@@ -86,3 +92,17 @@ const Footer = styled.div`
         margin-left: 14px;
     }
 `
+
+/*{movieSession.days.map((movie) => (
+            <Session>
+                <p>{movie.weekday} - {movie.date}</p>
+                {movie.showtimes.map((showtime) =>(
+                    <button>{showtime.name}</button>
+                ))}
+                </Session>))}
+            <Footer>
+               <div>
+                <img src={movieSession.posterURL}/>
+                </div>
+                <p>{movieSession.title}</p>
+            </Footer> */

@@ -1,18 +1,23 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styled from "styled-components"
 import Accents from "./Accents"
 import Films from "./Films"
 import Sessions from "./Sessions"
 import Success from "./Success"
 
-export function Container(){
-    return(
-        <StyleContainer>
-            <NavBar>CINEFLIX</NavBar>
-            {/*<Films/>*/}
-            {/*<Sessions/>*/}
-            {/*<Accents/>*/}
-            {/*<Success/>*/}
-        </StyleContainer>
+export function Container() {
+    return (
+        <BrowserRouter>
+            <StyleContainer>
+                <NavBar>CINEFLIX</NavBar>
+                <Routes>
+                    <Route path="/" element={<Films />}></Route>
+                    <Route path="/sessoes/:idFilme" element={<Sessions />}></Route>
+                    <Route path="/assentos/:idSessao" element={<Accents />}></Route>
+                    <Route path="/sucesso" element={<Success />}></Route>
+                </Routes>
+            </StyleContainer>
+        </BrowserRouter>
     )
 }
 
