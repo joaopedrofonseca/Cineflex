@@ -1,14 +1,15 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
+import Seats from "../components/Seats"
 
 export default function Accents() {
     const [chair, setChair] = useState([])
     const [movie, setMovie] = useState([])
     const [date, setDate] = useState([])
     const params = useParams()
-    console.log(chair, movie, date)
+
 
     useEffect(() => {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSessao}/seats`)
@@ -21,6 +22,7 @@ export default function Accents() {
             .catch((err) => console.log(err.response.data))
     }, [])
 
+
     if (chair === []) {
         return (
             console.log('aguardando...')
@@ -30,28 +32,30 @@ export default function Accents() {
         <>
             <Title>Selecione o(s) assento(s)</Title>
             <ContainerSeats>
-                {(chair.seats)?.map((e) => <Seats>{e.name}</Seats>)}
+                {(chair.seats)?.map((e,index) => <Seats index={index} chair={chair} key={index}/>)}
             </ContainerSeats>
             <ExampleSeats>
                 <div>
-                    <Seats color="#1AAE9E" borderColor="#0E7D71"></Seats>
+                    <EggSeats color="#1AAE9E" borderColor="#0E7D71"></EggSeats>
                     <p>Selecionado</p>
                 </div>
                 <div>
-                    <Seats color="#C3CFD9" borderColor="#7B8B99"></Seats>
+                    <EggSeats color="#C3CFD9" borderColor="#7B8B99"></EggSeats>
                     <p>Disponível</p>
                 </div>
                 <div>
-                    <Seats color="#FBE192" borderColor="#F7C52B"></Seats>
+                    <EggSeats color="#FBE192" borderColor="#F7C52B"></EggSeats>
                     <p>Indisponível</p>
                 </div>
             </ExampleSeats>
             <Buyer>
+                <form>
                 <p>Nome do comprador:</p>
-                <input placeholder="Digite seu nome..."></input>
+                <input placeholder="Digite seu nome..." ></input>
                 <p>CPF do comprador:</p>
-                <input placeholder="Digite seu CPF..."></input>
+                <input placeholder="Digite seu CPF..." ></input>
                 <button>Reservar assento(s)</button>
+                </form>
             </Buyer>
             <Footer>
                 <div>
@@ -87,14 +91,6 @@ const ContainerSeats = styled.div`
     display: flex;
     flex-wrap: wrap;
 `
-const Seats = styled.button`
-    width: 26px;
-    height: 26px;
-    background: ${props => props.color};
-    border: 1px solid ${props => props.borderColor};
-    border-radius: 12px;
-    margin-right: 5px;
-`
 const ExampleSeats = styled.div`
     height: 53px;
     padding: 0px 40px;
@@ -105,6 +101,14 @@ const ExampleSeats = styled.div`
         flex-direction: column;
         align-items: center;
     }
+`
+const EggSeats = styled.button`
+    width: 26px;
+    height: 26px;
+    background: ${props => props.color};
+    border: 1px solid ${props => props.borderColor};
+    border-radius: 12px;
+    margin-right: 5px;
 `
 const Buyer = styled.div`
     width: 100%;
@@ -183,19 +187,3 @@ const Footer = styled.div`
         margin-left: 14px;
     }
 `
-
-/*                {(chair.seats).map((s) => (
-                    <Seats>{s.name}</Seats>
-                ))}
-            <Footer>
-                <div>
-                    <img src={image.posterURL} />
-                </div>
-                <footer>
-                    <p>{image.title}</p>
-                    <p>{chair.day.weekday} - {chair.name}</p>
-                </footer>
-            </Footer>
-
-
-*/

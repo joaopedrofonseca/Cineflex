@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 export default function Success(){
@@ -21,7 +22,9 @@ export default function Success(){
             <p>Enola Holmes</p>
             <p>24/06/2021 15:00</p>
         </Infos>
+        <Link to="/">
         <BackHome>Voltar para home</BackHome>
+        </Link>
         </>
     )
 
