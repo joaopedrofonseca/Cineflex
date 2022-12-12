@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Success({chair, movie, date, name, cpf}){
+export default function Success({chair, movie, date, name, cpf, selectedSeats}){
     return(
         <>
         <Title>
@@ -14,8 +14,9 @@ export default function Success({chair, movie, date, name, cpf}){
         </Infos>
         <Infos>
             <h1>Ingressos</h1>
-            <p>Enola Holmes</p>
-            <p>24/06/2021 15:00</p>
+            {selectedSeats.map((element) => (
+                <p>Assento {element.name}</p>
+            ))}
         </Infos>
         <Infos>
             <h1>Comprador</h1>

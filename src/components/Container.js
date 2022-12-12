@@ -23,7 +23,7 @@ export function Container() {
                     <Route path="/" element={<Films />}></Route>
                     <Route path="/sessoes/:idFilme" element={<Sessions />}></Route>
                     <Route path="/assentos/:idSessao" element={<Accents chair={chair} setChair={setChair} movie={movie} setMovie={setMovie} date={date} setDate={setDate} name={name} setName={setName} cpf={cpf} setCpf={setCpf} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}/>}></Route>
-                    <Route path="/sucesso" element={<Success name={name} cpf={cpf} chair={chair} movie={movie} date={date}/>}></Route>
+                    <Route path="/sucesso" element={<Success name={name} cpf={cpf} chair={chair} movie={movie} date={date} selectedSeats={selectedSeats}/>}></Route>
                 </Routes>
             </StyleContainer>
         </BrowserRouter>

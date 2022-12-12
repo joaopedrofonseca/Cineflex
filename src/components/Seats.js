@@ -15,17 +15,16 @@ export default function Seats({ index, chair, selectedSeats, setSelectedSeats, n
             setClicked(true)
             let growSeat = numberSeats + 1;
             setNumberSeats(growSeat)
-            setSelectedSeats([...selectedSeats, s.id])
+            setSelectedSeats([...selectedSeats, s])
         } else{
             setClicked(false)
-            const filteredSeats = selectedSeats.filter((element) => (element.id !== s.id))
+            const filteredSeats = selectedSeats.filter((element) => (element !== s))
             setSelectedSeats([...filteredSeats])
             let lessSeat = numberSeats - 1;
             setNumberSeats(lessSeat)
 
         }
     }
-
 
     return (
         <StyleSeats

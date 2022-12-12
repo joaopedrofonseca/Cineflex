@@ -8,12 +8,14 @@ export default function Accents({chair, setChair, movie, setMovie, selectedSeats
     const [numberSeats, setNumberSeats] = useState(0)
     const params = useParams()
     const navigate = useNavigate()
+    const selectedSeatsID = selectedSeats.map((element) => element.id)
+
 
     function purchase(event){
         event.preventDefault();
         if(numberSeats > 0){
             const request = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", {
-                ids: selectedSeats,
+                ids: selectedSeatsID,
                 name: name,
                 cpf: cpf
             })
