@@ -1,15 +1,29 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import Seats from "../components/Seats"
 
-export default function Accents() {
-    const [chair, setChair] = useState([])
-    const [movie, setMovie] = useState([])
-    const [date, setDate] = useState([])
+export default function Accents({chair, setChair, movie, setMovie, selectedSeats, date, setDate, setSelectedSeats, name, setName, cpf, setCpf}) {
+    const [numberSeats, setNumberSeats] = useState(0)
     const params = useParams()
+    const navigate = useNavigate()
 
+    function purchase(event){
+        event.preventDefault();
+        if(numberSeats > 0){
+            const request = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", {
+                ids: selectedSeats,
+                name: name,
+                cpf: cpf
+            })
+            request.then(() => navigate("/sucesso"))   
+            console.log("deu bomm") 
+        }
+        if(numberSeats === 0){
+            alert("Deu ruim")
+        }
+    }
 
     useEffect(() => {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSessao}/seats`)
@@ -32,7 +46,14 @@ export default function Accents() {
         <>
             <Title>Selecione o(s) assento(s)</Title>
             <ContainerSeats>
-                {(chair.seats)?.map((e,index) => <Seats index={index} chair={chair} key={index}/>)}
+                {(chair.seats)?.map((e,index) => <Seats
+                numberSeats={numberSeats}
+                setNumberSeats={setNumberSeats}
+                selectedSeats={selectedSeats} 
+                setSelectedSeats={setSelectedSeats} 
+                index={index} 
+                chair={chair} 
+                key={index}/>)}
             </ContainerSeats>
             <ExampleSeats>
                 <div>
@@ -49,12 +70,12 @@ export default function Accents() {
                 </div>
             </ExampleSeats>
             <Buyer>
-                <form>
+                <form onSubmit={purchase}>
                 <p>Nome do comprador:</p>
-                <input placeholder="Digite seu nome..." ></input>
+                <input placeholder="Digite seu nome..." type="text" value={name} onChange={e => setName(e.target.value)} required ></input>
                 <p>CPF do comprador:</p>
-                <input placeholder="Digite seu CPF..." ></input>
-                <button>Reservar assento(s)</button>
+                <input placeholder="Digite seu CPF..." type="number" value={cpf} onChange={e => setCpf(e.target.value)} required></input>
+                <button type="submit">Reservar assento(s)</button>
                 </form>
             </Buyer>
             <Footer>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Success(){
+export default function Success({chair, movie, date, name, cpf}){
     return(
         <>
         <Title>
@@ -9,8 +9,8 @@ export default function Success(){
         </Title>
         <Infos>
             <h1>Filme e sessão</h1>
-            <p>Enola Holmes</p>
-            <p>24/06/2021 15:00</p>
+            <p>{movie.title}</p>
+            <p>{date.weekday} - {chair.name}</p>
         </Infos>
         <Infos>
             <h1>Ingressos</h1>
@@ -19,8 +19,8 @@ export default function Success(){
         </Infos>
         <Infos>
             <h1>Comprador</h1>
-            <p>Enola Holmes</p>
-            <p>24/06/2021 15:00</p>
+            <p>Nome: {name}</p>
+            <p>CPF: {cpf}</p>
         </Infos>
         <Link to="/">
         <BackHome>Voltar para home</BackHome>

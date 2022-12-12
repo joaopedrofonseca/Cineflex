@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styled from "styled-components"
 import Accents from "../pages/Accents"
@@ -6,6 +7,14 @@ import Sessions from "../pages/Sessions"
 import Success from "../pages/Success"
 
 export function Container() {
+    const [selectedSeats, setSelectedSeats] = useState([])
+    const [name, setName] = useState("")
+    const [cpf, setCpf] = useState("")
+    const [chair, setChair] = useState([])
+    const [movie, setMovie] = useState([])
+    const [date, setDate] = useState([])
+
+
     return (
         <BrowserRouter>
             <StyleContainer>
@@ -13,8 +22,8 @@ export function Container() {
                 <Routes>
                     <Route path="/" element={<Films />}></Route>
                     <Route path="/sessoes/:idFilme" element={<Sessions />}></Route>
-                    <Route path="/assentos/:idSessao" element={<Accents />}></Route>
-                    <Route path="/sucesso" element={<Success />}></Route>
+                    <Route path="/assentos/:idSessao" element={<Accents chair={chair} setChair={setChair} movie={movie} setMovie={setMovie} date={date} setDate={setDate} name={name} setName={setName} cpf={cpf} setCpf={setCpf} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats}/>}></Route>
+                    <Route path="/sucesso" element={<Success name={name} cpf={cpf} chair={chair} movie={movie} date={date}/>}></Route>
                 </Routes>
             </StyleContainer>
         </BrowserRouter>
