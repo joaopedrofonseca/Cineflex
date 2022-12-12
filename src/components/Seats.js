@@ -28,6 +28,7 @@ export default function Seats({ index, chair, selectedSeats, setSelectedSeats, n
 
     return (
         <StyleSeats
+            data-test="seat"
             available={seat[index].isAvailable}
             clicked={clicked}
             onClick={(!seat[index].isAvailable ? unavailableChair : () => chooseSeat(seat[index]))}

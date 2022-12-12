@@ -25,17 +25,17 @@ export default function Sessions() {
             <Container>
                 <Title>Selecione o horário</Title>
                 {(sessions.days)?.map((s) => (
-                    <StyleSession>
+                    <StyleSession data-test="movie-day">
                         <p>{s.weekday} - {s.date}</p>
                         {(s.showtimes)?.map((hour) => (
                             <Link to={`/assentos/${hour.id}`}>
-                                <button>{hour.name}</button>
+                                <button data-test="showtime">{hour.name}</button>
                             </Link>
                         ))}
                     </StyleSession>
                 ))}
             </Container>
-            <Footer>
+            <Footer data-test="footer">
                 <div>
                     <img src={sessions.posterURL} />
                 </div>

@@ -23,7 +23,7 @@ export default function Films() {
             <Catalog>
                 {movies.map((movie) => (
                     <Link key={movie.title} to={`/sessoes/${movie.id}`}>
-                        <Film id={movie.id}>
+                        <Film id={movie.id} data-test="movie">
                             <img src={movie.posterURL} />
                         </Film>
                     </Link>

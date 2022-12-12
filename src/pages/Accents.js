@@ -20,10 +20,9 @@ export default function Accents({chair, setChair, movie, setMovie, selectedSeats
                 cpf: cpf
             })
             request.then(() => navigate("/sucesso"))   
-            console.log("deu bomm") 
         }
         if(numberSeats === 0){
-            alert("Deu ruim")
+            alert("Escolha o(s) assento(s) por favor")
         }
     }
 
@@ -74,13 +73,13 @@ export default function Accents({chair, setChair, movie, setMovie, selectedSeats
             <Buyer>
                 <form onSubmit={purchase}>
                 <p>Nome do comprador:</p>
-                <input placeholder="Digite seu nome..." type="text" value={name} onChange={e => setName(e.target.value)} required ></input>
+                <input placeholder="Digite seu nome..." type="text" data-test="client-name" value={name} onChange={e => setName(e.target.value)} required ></input>
                 <p>CPF do comprador:</p>
-                <input placeholder="Digite seu CPF..." type="number" value={cpf} onChange={e => setCpf(e.target.value)} required></input>
-                <button type="submit">Reservar assento(s)</button>
+                <input placeholder="Digite seu CPF..." type="number" value={cpf} data-test="client-cpf" onChange={e => setCpf(e.target.value)} required></input>
+                <button type="submit" data-test="book-seat-btn">Reservar assento(s)</button>
                 </form>
             </Buyer>
-            <Footer>
+            <Footer data-test="footer">
                 <div>
                     <img src={movie.posterURL}/>
                 </div>
